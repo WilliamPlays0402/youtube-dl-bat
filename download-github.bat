@@ -5,11 +5,6 @@ if not exist %cd%\data (
     mkdir %cd%\data
 )
 SET versionPath = %cd%\data\version
-if not exist %versionPath% (
-    echo version file not found
-    PAUSE
-    goto download
-)
 SET tempFile=%cd%\data\.%random%-tmp
 
 @REM download version file
