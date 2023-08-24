@@ -1,15 +1,17 @@
 @ECHO off
 
 SET downloadUrl=https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/version
+SET versionPath = %cd%\data\version
 SET tempFile=%cd%\.%random%-tmp
 
 @REM download version file
 echo downloading version file
 BITSADMIN /transfer /download %downloadUrl% %tempFile% > nul
 
-@REM if the file version is different than file called "version" then download the new version
+@REM if the file version is different than file called "version" in folder called "data" then download the new version
 @REM if not, then exit
 
+echo comparing versions
 if not exist version (
     echo version file not found
     goto download
@@ -21,12 +23,13 @@ for /f "delims=" %%i in (%tempFile%) do set newVersion=%%i
 
 if %version% neq %newVersion% (
     echo new version found
-    del version > nul
-    ren %tempFile% version > nul
+    del version
+    ren %tempFile% version
+    del %tempFile%
     goto download
 ) else (
     echo no new version found
-    del %tempFile% > nul
+    del %tempFile%
     goto exit
 )
 
@@ -44,11 +47,11 @@ echo downloading new version
 
 @REM download files:
 
-BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/package-lock.json %cd%\package-lock.json > nul
-BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/package.json %cd%\package.json > nul
-BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/index.js %cd%\index.js > nul
-BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/download-github.bat %cd%\download-github.bat > nul
-BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/version %cd%\version > nul
+BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/package-lock.json %cd%\data\package-lock.json > nul
+BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/package.json %cd%\data\package.json > nul
+BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/index.js %cd%\data\index.js > nul
+BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/download-github.bat %cd%\data\download-github.bat > nul
+BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/version %cd%\data\version > nul
 
 @REM install nodejs
 
@@ -74,7 +77,7 @@ IF "%NODE_VER%"=="%NULL_VAL%" (
     echo A version of Node.js ^(%NODE_VER%^) is installed. Proceeding...
 )
 
-@REM run npm install
+@REM run npm install in folder "data"
 
 echo installing dependencies
 npm install
