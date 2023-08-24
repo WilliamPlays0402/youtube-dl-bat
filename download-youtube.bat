@@ -17,7 +17,6 @@ BITSADMIN /transfer /download %downloadUrl% %tempFile% > nul
 echo Comparing versions
 if not exist %cd%\data\version (
     echo Version file not found!
-    PAUSE
     goto download
 )
 
@@ -86,7 +85,7 @@ IF "%NODE_VER%"=="%NULL_VAL%" (
 echo installing dependencies
 cd data
 npm install
-node index.js
+start node index.js
 cd ..
 exit
 
