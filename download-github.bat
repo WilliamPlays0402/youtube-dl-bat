@@ -1,15 +1,10 @@
 @ECHO off
 
-NET SESSION >nul 2>&1
-IF %ERRORLEVEL% NEQ 0 (
-    echo This setup needs admin permissions. Please run this file as admin.
-    pause
-    exit
-)
-
 SET downloadUrl=https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/version
 SET tempFile=%cd%\.%random%-tmp
 
+@REM download version file
+echo downloading version file
 BITSADMIN /transfer /download %downloadUrl% %tempFile% > nul
 
 @REM if the file version is different than file called "version" then download the new version
@@ -28,6 +23,7 @@ if %version% neq %newVersion% (
     echo new version found
     del version
     ren %tempFile% version
+    del %tempFile%
     goto download
 ) else (
     echo no new version found
