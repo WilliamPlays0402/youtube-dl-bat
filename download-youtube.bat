@@ -32,7 +32,7 @@ if %version% neq %newVersion% (
 ) else (
     echo No new version found. Exiting...
     del %tempFile%
-    node ./data/index.js
+    start node ./data/index.js
     goto exit
 )
 
