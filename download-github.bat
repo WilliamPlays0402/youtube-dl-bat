@@ -61,7 +61,7 @@ echo downloading new version
 BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/package-lock.json %cd%\data\package-lock.json > nul
 BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/package.json %cd%\data\package.json > nul
 BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/index.js %cd%\data\index.js > nul
-BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/download-github.bat %cd%\data\download-github.bat > nul
+BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/download-github.bat %cd%\download-github.bat > nul
 BITSADMIN /transfer /download https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/version %cd%\data\version > nul
 
 @REM install nodejs
