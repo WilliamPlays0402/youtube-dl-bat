@@ -116,11 +116,13 @@ async function main() {
   }
   let downloadAudio;
   let downloadVideo;
+  let vidpath;
+  let audpath;
   // download the highest quality video and audio into a single file, save it on desktop as the video title
   const videoName = info.videoDetails.title.replace(/[^\w\s]/gi, '');//.replace(/ /g, '_');
   if (download === 'v' || download === 'b') {
     downloadVideo = ytdl(url, { quality: chosenVidQuality.itag, format: 'mp4', filter: 'videoonly' })
-    const vidpath = path.join(folderpath, `${videoName}-vid.mp4`)
+    vidpath = path.join(folderpath, `${videoName}-vid.mp4`)
     const videoOutput = fs.createWriteStream(vidpath);
     downloadVideo.pipe(videoOutput);
     downloadVideo.on('progress', progresshandler);
@@ -128,7 +130,7 @@ async function main() {
   // folder: c:/Users/pelto/Desktop/youtube-downloader/${videoName}.mp4
   if (download === 'a' || download === 'b') {
     downloadAudio = ytdl(url, { quality: chosenAudQuality.itag, format: 'mp4', filter: 'audioonly' })
-    const audpath = path.join(folderpath, `${videoName}-aud.mp3`)
+    audpath = path.join(folderpath, `${videoName}-aud.mp3`)
     const audioOutput = fs.createWriteStream(audpath);
     downloadAudio.pipe(audioOutput);
     if (download === 'a') {
