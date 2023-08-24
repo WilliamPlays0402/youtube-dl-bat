@@ -2,28 +2,30 @@
 
 SET downloadUrl=https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/version
 SET versionPath = %cd%\data\version
-SET tempFile=%cd%\.%random%-tmp
+SET tempFile=%cd%\data\.%random%-tmp
 
 @REM download version file
 echo downloading version file
 BITSADMIN /transfer /download %downloadUrl% %tempFile% > nul
 
-@REM if the file version is different than file called "version" in folder called "data" then download the new version
+@REM if the new version is different than file called "version" in folder called "data" then download the new version
 @REM if not, then exit
 
 echo comparing versions
-if not exist version (
+if not exist %versionPath% (
     echo version file not found
     goto download
 )
 
-for /f "delims=" %%i in (version) do set version=%%i
+PAUSE
+
+for /f "delims=" %%i in (%versionPath%) do set version=%%i
 
 for /f "delims=" %%i in (%tempFile%) do set newVersion=%%i
 
 if %version% neq %newVersion% (
     echo new version found
-    del version
+    del %versionPath%
     ren %tempFile% version
     del %tempFile%
     goto download
@@ -80,6 +82,7 @@ IF "%NODE_VER%"=="%NULL_VAL%" (
 @REM run npm install in folder "data"
 
 echo installing dependencies
+cd data
 npm install
 goto exit
 
