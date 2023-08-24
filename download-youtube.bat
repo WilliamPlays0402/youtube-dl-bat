@@ -86,7 +86,6 @@ echo installing dependencies
 cd data
 npm install
 echo Dependencies installed. Starting...
-node ./data/index.js %cd%
 cd ..
 goto stop
 
