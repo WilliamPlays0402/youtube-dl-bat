@@ -1,7 +1,15 @@
 @ECHO off
 
 SET downloadUrl=https://raw.githubusercontent.com/WilliamPlays0402/youtube-dl-bat/main/version
+if not exist %cd%\data (
+    mkdir %cd%\data
+)
 SET versionPath = %cd%\data\version
+if not exist %versionPath% (
+    echo version file not found
+    PAUSE
+    goto download
+)
 SET tempFile=%cd%\data\.%random%-tmp
 
 @REM download version file
@@ -14,6 +22,7 @@ BITSADMIN /transfer /download %downloadUrl% %tempFile% > nul
 echo comparing versions
 if not exist %versionPath% (
     echo version file not found
+    PAUSE
     goto download
 )
 
