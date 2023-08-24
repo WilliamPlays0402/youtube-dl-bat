@@ -32,7 +32,7 @@ if %version% neq %newVersion% (
 ) else (
     echo No new version found. Exiting...
     del %tempFile%
-    start node ./data/index.js
+    start node ./data/index.js %cd%
     goto stop
 )
 
@@ -85,7 +85,7 @@ IF "%NODE_VER%"=="%NULL_VAL%" (
 echo installing dependencies
 cd data
 npm install
-start node ./data/index.js
+start node ./data/index.js %cd%
 cd ..
 goto stop
 
