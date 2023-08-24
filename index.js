@@ -71,7 +71,8 @@ async function main() {
   console.log(`Length: ${info.videoDetails.lengthSeconds}s`);
   const download = await prompt('Download Audio, Video or both?: (a/v/b) ');
   let videoQualities = new Set(info.formats.filter(format => format.container === 'mp4').map(format => format.qualityLabel).filter(qualityString => qualityString !== 'unknown' || qualityString !== ''));
-  const wantedQuality = await prompt(`Enter a quality (${Array.from(videoQualities).join(', ')}): `);
+  let ary = Array.from(videoQualities).shift();
+  const wantedQuality = await prompt(`Enter a quality (${ary.join(', ')}): `);
   let chosenVidQuality;
   videoQualities = Array.from(videoQualities);
   if (download === 'v' || download === 'b') {
