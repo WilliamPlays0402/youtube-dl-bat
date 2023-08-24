@@ -16,7 +16,7 @@ BITSADMIN /transfer /download %downloadUrl% %tempFile% > nul
 
 echo Comparing versions
 if not exist %cd%\data\version (
-    echo version file not found
+    echo Version file not found!
     PAUSE
     goto download
 )
@@ -33,11 +33,12 @@ if %version% neq %newVersion% (
 ) else (
     echo No new version found. Exiting...
     del %tempFile%
+    node ./data/index.js
     goto exit
 )
 
 :download
-echo downloading new version
+echo Downloading new version
 @REM these are the files we want:
 @REM package-lock.json
 @REM package.json
@@ -92,4 +93,5 @@ exit
 :exit
 echo.
 echo.
-pause >nul
+echo Press a key to exit.
+PAUSE > nul
