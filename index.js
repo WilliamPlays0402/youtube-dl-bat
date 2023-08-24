@@ -4,7 +4,7 @@ const path = require('path');
 const ffmpeg = require('fluent-ffmpeg');
 const audio = require('fluent-ffmpeg/lib/options/audio');
 
-const folderpath = 'c:/Users/pelto/Desktop/youtube-downloader/'
+// const folderpath = 'c:/Users/pelto/Desktop/youtube-downloader/'
 
 async function prompt(text) {
   return new Promise((resolve, reject) => {
@@ -63,6 +63,7 @@ async function merge(folderpath, vidpath, audpath, videoName) {
 
 
 async function main() {
+  const folderpath = process.argv[2] || await prompt('Enter a folder path: ');
   const url = await prompt('Enter a YouTube video URL: ');
   const info = await ytdl.getInfo(url);
   console.log(`Title: ${info.videoDetails.title}`);
