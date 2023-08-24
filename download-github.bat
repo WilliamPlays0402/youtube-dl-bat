@@ -21,13 +21,12 @@ for /f "delims=" %%i in (%tempFile%) do set newVersion=%%i
 
 if %version% neq %newVersion% (
     echo new version found
-    del version
-    ren %tempFile% version
-    del %tempFile%
+    del version > nul
+    ren %tempFile% version > nul
     goto download
 ) else (
     echo no new version found
-    del %tempFile%
+    del %tempFile% > nul
     goto exit
 )
 
