@@ -16,23 +16,23 @@ BITSADMIN /transfer /download %downloadUrl% %tempFile% > nul
 
 echo Comparing versions
 if not exist %cd%\data\version (
-    echo Version file not found!
+    echo Version file not found! Downloading...
     goto download
 )
 
-for /f "delims=" %%i in (%versionPath%) do set version=%%i
+for /f "delims=" %%i in (%cd%\data\version) do set version=%%i
 
 for /f "delims=" %%i in (%tempFile%) do set newVersion=%%i
 
-if %version% neq %newVersion% (
+if not "%version%"=="%newVersion%" (
     echo New version found! Downloading...
     del %cd%\data\version
     ren %tempFile% version
     goto download
 ) else (
-    echo No new version found. Exiting...
+    echo No new version found. Starting...
     del %tempFile%
-    start node ./data/index.js %cd%
+    node ./data/index.js %cd%
     goto stop
 )
 
@@ -85,7 +85,8 @@ IF "%NODE_VER%"=="%NULL_VAL%" (
 echo installing dependencies
 cd data
 npm install
-start node ./data/index.js %cd%
+echo Dependencies installed. Starting...
+node ./data/index.js %cd%
 cd ..
 goto stop
 
