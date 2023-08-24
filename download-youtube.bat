@@ -5,36 +5,33 @@ if not exist %cd%\data (
     mkdir %cd%\data
 )
 SET versionPath = %cd%\data\version
-SET tempFile=%cd%\data\.%random%-tmp
+SET tempFile=%cd%\data\newVersion
 
 @REM download version file
-echo downloading version file
+echo Downloading version file
 BITSADMIN /transfer /download %downloadUrl% %tempFile% > nul
 
 @REM if the new version is different than file called "version" in folder called "data" then download the new version
 @REM if not, then exit
 
-echo comparing versions
-if not exist %versionPath% (
+echo Comparing versions
+if not exist %cd%\data\version (
     echo version file not found
     PAUSE
     goto download
 )
-
-PAUSE
 
 for /f "delims=" %%i in (%versionPath%) do set version=%%i
 
 for /f "delims=" %%i in (%tempFile%) do set newVersion=%%i
 
 if %version% neq %newVersion% (
-    echo new version found
-    del %versionPath%
+    echo New version found! Downloading...
+    del %cd%\data\version
     ren %tempFile% version
-    del %tempFile%
     goto download
 ) else (
-    echo no new version found
+    echo No new version found. Exiting...
     del %tempFile%
     goto exit
 )
@@ -88,10 +85,11 @@ IF "%NODE_VER%"=="%NULL_VAL%" (
 echo installing dependencies
 cd data
 npm install
-goto exit
+node index.js
+cd ..
+exit
 
 :exit
 echo.
 echo.
-echo Press a key to exit.
-pause
+pause >nul
